@@ -10,8 +10,8 @@ inputs:
   github-token:
     description: "Github Authentication Token"
     required: true
-  slack-token:
-    description: "Slack Authentication Token"
+  slack-webhook-url:
+    description: "Slack WebHook URL"
     required: true
   slack-channel:
     description: "Slack Channel Integration"

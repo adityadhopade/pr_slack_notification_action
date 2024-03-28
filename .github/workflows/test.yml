@@ -12,5 +12,5 @@ jobs:
       - uses: ./
         with:
           github-token: ${{ secrets.ACCESS_GITHUB_TOKEN }}
-          slack-token: ${{ secrets.ACCESS_SLACK_TOKEN }}
+          slack-webhook-url: ${{ secrets.SLACK_WEBHOOK_URL }}
           slack-channel: ${{ secrets.SLACK_CHANNEL }}

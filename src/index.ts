@@ -1,18 +1,15 @@
 import * as core from '@actions/core';
 import * as github from '@actions/github';
-import { WebClient } from '@slack/web-api';
+import axios from 'axios'; // Import Axios for making HTTP requests
 
 async function run() {
   try {
     // Get the GitHub token
     const githubToken = core.getInput('github-token');
 
-    // Get the Slack token and channel
-    const slackToken = core.getInput('slack-token');
+    // Get the Slack webhook URL and channel
+    const slackWebhookUrl = core.getInput('slack-webhook-url');
     const slackChannel = core.getInput('slack-channel');
-
-    // Create an Octokit instance using the GitHub token
-    const octokit = github.getOctokit(githubToken);
 
     // Get the event payload
     const payload = github.context.payload;
@@ -25,7 +22,7 @@ async function run() {
         if (payload.comment && payload.comment.id) {
           // Fetch the comment using GitHub's REST API
           const { owner, repo } = github.context.repo;
-          const comment = await octokit.rest.issues.getComment({
+          const comment = await github.getOctokit(githubToken).rest.issues.getComment({
             owner,
             repo,
             comment_id: payload.comment.id,
@@ -37,13 +34,13 @@ async function run() {
 
             // Check if the comment contains the word "bug"
             if (commentBody.includes('bug')) {
-              // Initialize a Slack client
-              const slackClient = new WebClient(slackToken);
+              // Prepare message for Slack
+              const message = `A bug has been mentioned in the PR: ${payload.issue.pull_request.html_url}`;
 
-              // Send a notification to Slack
-              await slackClient.chat.postMessage({
+              // Send a notification to Slack using the webhook URL
+              await axios.post(slackWebhookUrl, {
                 channel: slackChannel,
-                text: `A bug has been mentioned in the PR: ${payload.issue.pull_request.html_url}`,
+                text: message,
               });
 
               core.info('Slack notification sent successfully');
