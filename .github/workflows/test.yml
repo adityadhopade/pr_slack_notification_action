@@ -11,6 +11,6 @@ jobs:
       - uses: actions/checkout@v2
       - uses: ./
         with:
-          gh-token: ${{ secrets.ACCESS_GITHUB_TOKEN }}
+          github-token: ${{ secrets.ACCESS_GITHUB_TOKEN }}
           slack-token: ${{ secrets.ACCESS_SLACK_TOKEN }}
           slack-channel: ${{ secrets.SLACK_CHANNEL }}
