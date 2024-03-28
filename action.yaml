@@ -5,3 +5,14 @@ author: "Aditya Dhopade"
 runs:
   using: "node16"
   main: "dist/index.js"
+
+inputs:
+  github-token:
+    description: "Github Authentication Token"
+    required: true
+  slack-token:
+    description: "Slack Authentication Token"
+    required: true
+  slack-channel:
+    description: "Slack Channel Integration"
+    required: true
