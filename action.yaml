@@ -1,0 +1,7 @@
+name: "PR Slack Integration"
+description: "Add PR Comment to Slack Integration"
+author: "Aditya Dhopade"
+
+runs:
+  using: "node16"
+  main: "dist/index.js"
